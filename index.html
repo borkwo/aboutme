@@ -1,6 +1,10 @@
 <html lang="en"><head>
 
 <!--
+messy fucking code. (figured it out hehe)
+i am not good at explaining, but fujoshi uses grids like me. check her out.
+if you want this theme, just credit me somewhere.⠀⠀
+
 theme inspired by oooeee@nekoweb.org
 
 calendar code is from https://www.javascriptfreecode.com/36.htm !
@@ -266,6 +270,58 @@ font-style:italic;
 font-weight:bold;
 }
 
+/* custom scrollbar -- windows 7 aero-ish glossy look, recolored to the site's pink */
+/* palette, with a neon glow on the thumb and a faint tick-mark track texture */
+::-webkit-scrollbar {
+width:17px;
+height:17px;
+}
+
+::-webkit-scrollbar-track {
+background-color: #FFEFEF;
+background-image: repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(202,135,135,0.3) 4px, rgba(202,135,135,0.3) 5px);
+border-left:1px solid black;
+border-right:1px solid black;
+}
+
+::-webkit-scrollbar-thumb {
+background: linear-gradient(to right, #CA8787 0%, #FFD0D0 18%, #FFFFFF 50%, #FFD0D0 82%, #CA8787 100%);
+border:1px solid black;
+border-radius:2px;
+box-shadow: 0 0 6px #D37676;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: linear-gradient(to right, #b46f6f 0%, #CA8787 18%, #FFD0D0 50%, #CA8787 82%, #b46f6f 100%);
+box-shadow: 0 0 10px #D37676;
+}
+
+::-webkit-scrollbar-thumb:active {
+background-color: #D37676;
+box-shadow: 0 0 12px #D37676;
+}
+
+::-webkit-scrollbar-button {
+background-color: #FFD0D0;
+border:1px solid black;
+height:16px;
+width:16px;
+}
+
+::-webkit-scrollbar-button:hover {
+background-color: #CA8787;
+}
+
+::-webkit-scrollbar-corner {
+background-color: #FFEFEF;
+}
+
+/* firefox only supports flat colors (no gradients/glow), but it's still on-theme */
+html {
+scrollbar-width: auto;
+scrollbar-color: #CA8787 #FFEFEF;
+}
+
   </style>
         
 </head>
@@ -336,14 +392,14 @@ font-weight:bold;
         <div class="씨발">
         <!-- the image of a kitten and has text above the kitten -->
         <center><img src="https://i.ibb.co/G4fvdB62/Untitled-design-5.png" style="border:1px solid black;"></center>
-        My favorite game currently is Cybperpunk 2077 (love realistic graphics) and play minecraft and some rhythm games time to time.<!-- an image that is floating right as of right now --><img src="https://i.ibb.co/YVpZN4v/ezgif-1e4eda085b59fafa.gif" style="float:right;"> Favorite swimming events include 200 free, 50 free, and 100 back. <br><br>
-        Outside of my other activites i'm a huge NBA fan (go mavs), and currently a candidates master in codeforces! </a> ("In the midst of chaos, there is also opportunity." - Sun Tzu, The Art of War)
+        My favorite game currently is Cybperpunk 2077. I am a big fan of games with realistic graphics. I also play minecraft and some rhythm games time to time. <!-- an image that is floating right as of right now --><img src="https://i.ibb.co/YVpZN4v/ezgif-1e4eda085b59fafa.gif" style="float:right;"> Favorite swimming events include 200 free, 50 free, and 100 back. <br><br>
+        Outside of my other activites i'm a huge NBA fan (go mavs), and also currently a candidates master in codeforces! </a> ("Supreme excellence consists in breaking the enemy's resistance without fighting." - Sun Tzu, The Art of War)
         </div>
     </div>
     
     <!-- footer -->
     <div class="사과">
-    last edited (<b>6/26/2026</b>) , inspo from rice.place & nekoweb.org
+    last edited (<b>6/26/2026</b>) , inspo from https://rice.place/home.html.
     </div>
 
   </div>
