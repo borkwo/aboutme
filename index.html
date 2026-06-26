@@ -1,0 +1,558 @@
+<html lang="en"><head>
+
+<!--
+messy fucking code. (figured it out hehe)
+i am not good at explaining, but fujoshi uses grids like me. check her out.
+if you want this theme, just credit me somewhere.⠀⠀
+
+theme inspired by oooeee@nekoweb.org
+
+calendar code is from https://www.javascriptfreecode.com/36.htm !
+-->
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- this is where you can have your style.css placed here if you want a cleaner code! -->
+<link href="style.css" rel="stylesheet" type="text/css" media="all">
+
+  <!-- the favicon image of your site! --> 
+  <link rel="icon" type="image/png" href="https://i.ibb.co/zWxtg9GS/download-1.png">
+  
+  <!-- this is the title that shows up on the tab! remove this when you have a title! -->
+  <title>borkwo's dungeon</title>
+        
+  <style>
+
+/* link styling! do whatever!! */
+a:link {
+text-decoration: none;
+color:black;
+}
+
+a:visited {
+text-decoration: none;
+color:black;
+}
+
+a:hover {
+text-decoration: none;
+font-style:italic;
+color:#FFEFEF;
+font-weight:bold;
+}
+
+a:active {
+text-decoration: none;
+color:black;
+}
+/* end of link styling */
+
+/* keeps padding/borders from blowing up sizes on small screens */
+/* also sets the custom cursor site-wide */
+* {
+box-sizing: border-box;
+cursor: url("https://i.ibb.co/zVtVVfR0/download-2-1.png"), auto;
+}
+
+/* so images never overflow their container on narrow screens */
+img {
+max-width: 100%;
+height: auto;
+}
+
+/* these are what you need. background color/image, font color and what font you want to use */
+body{
+font-family:ms gothic;
+font-size:14px;
+color:#5D5D5D;
+background-color:#FFEFEF;
+background-image:url("");
+background-size:cover;
+background-attachment: fixed;
+margin:0px;
+padding:10px;
+overflow:auto;
+}
+
+/* wraps the container so it can be scaled down to fit small screens. */
+/* flex + justify-content:center centers .오이 whether it's at full size or scaled down -- */
+/* see the script near the closing body tag */
+.scale-wrap {
+  width:100%;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+/* these are the mother grids kids! */
+/* (this used to sit inside a wider 900px "mother grid" .container that left empty */
+/* columns on either side -- now it's the directly-sized box, so on small screens */
+/* scaling it down actually fills the screen instead of scaling the wasted margins too) */
+/* rows are auto now (matching life/blog/art's pattern) instead of fixed fr-of-800px -- */
+/* that fixed-height system was making 수박/복숭이 stretch to different proportions than the other pages */
+.오이 {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr 1fr;
+  grid-template-rows: auto auto auto auto;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "우유 우유 우유"
+    "딸기 딸기 딸기"
+    "수박 복숭이 복숭이"
+    "사과 사과 사과";
+  width:600px;
+  flex-shrink:0;
+  transform-origin: center top;
+  position:relative;
+}
+
+/* header shit! -- explicit height since it's just a background-image with no content */
+/* (matches life/blog/art's banner height exactly) */
+.우유 {
+grid-area: 우유;
+border:1px solid black;
+border-bottom:none;
+background-image:url("https://i.ibb.co/gFjmcs6z/Untitled-design-6.png");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+height:250px;
+}
+
+/* that little cute text under the header! */
+.딸기 { 
+grid-area: 딸기; 
+border:1px solid black;
+padding:1px;
+background-color:white;
+text-align:center;
+}
+
+/* this is where the .떡 and .ㅅㅂ is. */
+/* you can erase those and make an entirely new navigation style! */
+.수박 {
+grid-area: 수박;
+border:1px solid black;
+border-top:none;
+border-right:none;
+background-color:white;
+padding:0px 0px 5px 0px;
+}
+
+/* this is the mother grids grandkids */
+/* rows are auto now since 복숭이 itself is no longer forced to a fixed height */
+.복숭이 {
+  display: grid;
+  grid-template-columns: 1fr 0.7fr 1.3fr;
+  grid-template-rows: auto auto;
+  gap: 0px 0px;
+  grid-template-areas:
+    "포도 포도 ㅠㅠ"
+    "씨발 씨발 씨발";
+grid-area: 복숭이;
+border:1px solid black;
+border-top:none;
+border-bottom:none;
+background-color:white;
+padding:5px;
+}
+
+/* this is the site info on the left! */
+.포도 {
+grid-area: 포도;
+padding:5px;
+line-height:110%;
+}
+
+/* this is for the calendar! on the right! -- explicit height since the iframe's */
+/* height="100%" attribute needs a definite parent height to resolve against */
+.ㅠㅠ {
+grid-area: ㅠㅠ;
+padding:0px;
+float:right;
+}
+
+#frame {
+height:200px;
+}
+
+/* more area under the site info and calendar divs! */
+.씨발 { 
+grid-area: 씨발; 
+padding:5px;
+line-height:110%;
+}
+
+/* this is the footer! */
+.사과 { 
+grid-area: 사과; 
+border:1px solid black;
+text-align:center;
+padding:1px;
+background-color:white;
+}
+
+/* this is the navigation area where they have their own divs */
+/* of course you can change this! doesn't have to be in it's own div box! */
+.떡 {
+background-color: #FFD0D0;
+background-image:url("");
+border:1px groove black;
+border-left:none;
+border-right:none;
+border-radius:0px;
+color: #5d5d5d;
+padding:5px;
+text-align:center;
+}
+
+/* this is the navigation area but on hover */
+.떡:hover {
+background-color: #CA8787;
+background-image:url("");
+border:1px groove black;
+border-left:none;
+border-right:none;
+border-radius:0px;
+font-style:italic;
+color:#FFEFEF;
+font-weight:bold;
+padding:5px;
+text-align:center;
+}
+
+/* this is that little description info under the navigation area. it has its own div */
+.ㅅㅂ {
+padding:15px 5px 5px 5px;
+}
+
+/* a little extra width back on tiny phones */
+@media (max-width: 480px) {
+  body {
+    padding:4px;
+  }
+}
+
+/* the background music widget -- docked to the bottom-right by default, but JS */
+/* switches it to bottom-center (.music-widget--bottom) whenever there isn't enough */
+/* room beside the page card to show it without overlapping */
+.music-widget {
+position:fixed;
+bottom:10px;
+right:10px;
+z-index:9999;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:5px;
+}
+
+.music-widget.music-widget--bottom {
+right:auto;
+left:50%;
+transform:translateX(-50%);
+}
+
+.yt-frame-wrap {
+position:relative;
+}
+
+.music-widget.minimized .yt-frame-wrap {
+display:none;
+}
+
+.minimize-btn {
+position:absolute;
+top:-8px;
+right:-8px;
+width:18px;
+height:18px;
+line-height:16px;
+text-align:center;
+font-size:12px;
+background-color: #FFD0D0;
+border:1px solid black;
+border-radius:50%;
+padding:0px;
+cursor: url("https://i.ibb.co/zVtVVfR0/download-2-1.png"), auto;
+}
+
+.minimize-btn:hover {
+background-color: #CA8787;
+color:#FFEFEF;
+}
+
+.music-toggle {
+background-color: #FFD0D0;
+border:1px groove black;
+border-radius:0px;
+padding:6px 10px;
+font-family:ms gothic;
+font-size:13px;
+color:#5d5d5d;
+cursor: url("https://i.ibb.co/zVtVVfR0/download-2-1.png"), auto;
+}
+
+.music-toggle:hover {
+background-color: #CA8787;
+color:#FFEFEF;
+font-style:italic;
+font-weight:bold;
+}
+
+  </style>
+        
+</head>
+    
+  <body>
+
+<!-- this wrapper lets the whole layout below get scaled down to fit small screens -->
+<div class="scale-wrap">
+
+<!-- the mother grid -->
+  <div class="오이">
+
+    <div class="우유">
+  <!-- this is where the header is located at. -->
+  <!-- where is it? in the styling area -->    
+    </div>
+    
+    <!-- that cute text under header -->
+    <div class="딸기">
+     ⋆ welcome to my <font color="#D37676">dungeon</font> fellow visitor ⋆
+    </div>
+    
+    <!-- the div that holds the navigation -->
+    <div class="수박">
+    
+    	<!-- 떡 is its own div, which are the navigations -->
+    	<!-- style="border-bottom:none; is needed! but of course you can completely change the navi system! -->
+    	<!-- you can remove style="cursor: not-allowed;! i put it there because there is no link provided! -->
+    	<div class="떡" style="border-bottom:none;border-top:none;background-color:#CA8787;">
+        <b>navigation</b>
+        </div>
+        <div class="떡" style="border-bottom:none;background-color:#CA8787;">
+        <a href="" style="cursor: not-allowed;"><b>home</b></a>
+        </div>
+        <div class="떡" style="border-bottom:none;">
+        <a href="https://open.spotify.com/user/31kpk6e77t5vb7qplrl6tqibyw4e">spotify</a>
+        </div>
+        <div class="떡" style="border-bottom:none;">
+        <a href="https://myanimelist.net/profile/borkwo">MAL</a>
+        </div>
+        <div class="떡" style="border-bottom:none;background-color:#CA8787;">
+        <b>personal</b>
+        </div>
+        <div class="떡">
+        <a href="life.html">life(pics)</a>
+        </div>
+        
+     <!-- little div under navigation -->
+     <div class="ㅅㅂ">Hello, ¡Hola!, Bonjour, Hallo, Ciao, Olá, こんにちは, 你好, 안녕하세요, नमस्ते, مرحبا, Привет, Aloha
+     
+     <!-- the image under the little div -->
+     <center><img src="https://i.ibb.co/PZRKYddn/Untitled-design-9.png" style="width:140px;margin-top:18px;border:1px solid black;"></center>
+     </div>
+    </div>
+    
+    <!-- grandkids -->
+    <div class="복숭이">
+        <!-- left div -->
+    	<div class="포도">
+      <img src="https://i.ibb.co/VWKZgRhp/ezgif-7ef0700dc385e6cd.gif" style="float:left;padding-right:5px;"> Hi, im bork(Aaron) and welcome to my <i>dungeon.</i> My hobbies include competitve programming, competitve swimming, and chess! Love to read/watch about anything and free feel to give me some recs :)<br><br>
+      Looking for where to go next? check out some pics i've taken! <br>|╯°□°)╯︵┻━┻
+      </div>
+      <!-- right div -->
+       <div class="ㅠㅠ">
+      <iframe id="frame" src="https://rice.place/other/calendar01.html" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
+        <!-- bottom div -->
+        <div class="씨발">
+        <!-- the image of a kitten and has text above the kitten -->
+        <center><img src="https://i.ibb.co/G4fvdB62/Untitled-design-5.png" style="border:1px solid black;"></center>
+        My favorite game currently is Cybperpunk 2077. I am a big fan of games with realistic graphics. I also play minecraft and some rhythm games time to time. <!-- an image that is floating right as of right now --><img src="https://i.ibb.co/YVpZN4v/ezgif-1e4eda085b59fafa.gif" style="float:right;"> Favorite swimming events include 200 free, 50 free, and 100 back. <br><br>
+        Outside of my other activites i'm a huge NBA fan (go mavs), and also currently a candidates master in codeforces! </a> ("Supreme excellence consists in breaking the enemy's resistance without fighting." - Sun Tzu, The Art of War)
+        </div>
+    </div>
+    
+    <!-- footer -->
+    <div class="사과">
+    last edited (<b>6/26/2026</b>) , inspo from https://rice.place/home.html.
+    </div>
+
+  </div>
+
+</div>
+
+<!-- scales the .오이 box down to fit the screen on small devices, keeping the exact -->
+<!-- same layout instead of reflowing it into one column. on phone-width screens it also -->
+<!-- factors in screen height, so the whole card tends to fit on one screen without a gap -->
+<!-- below -- desktop/laptop screens are only ever fit by width (a short laptop screen -->
+<!-- shouldn't shrink the page, that's just normal scrolling). -->
+<!-- re-runs on resize and whenever content inside changes. -->
+<script>
+(function () {
+  var PHONE_BREAKPOINT = 700;
+  var wrap = document.querySelector('.scale-wrap');
+  var box = document.querySelector('.오이');
+
+  function fit() {
+    var scale = Math.min(1, wrap.clientWidth / box.offsetWidth);
+    if (wrap.clientWidth <= PHONE_BREAKPOINT) {
+      var bodyStyle = getComputedStyle(document.body);
+      var vPad = parseFloat(bodyStyle.paddingTop) + parseFloat(bodyStyle.paddingBottom);
+      var heightScale = (window.innerHeight - vPad) / box.offsetHeight;
+      scale = Math.min(scale, heightScale);
+    }
+    box.style.transform = 'scale(' + scale + ')';
+    wrap.style.height = (box.offsetHeight * scale) + 'px';
+  }
+
+  window.addEventListener('resize', fit);
+  window.addEventListener('load', fit);
+  fit();
+
+  new MutationObserver(fit).observe(box, { childList: true, subtree: true });
+})();
+</script>
+
+<!-- background music widget. click to play/stop -- can't autoplay with sound -->
+<!-- without a user gesture first, browsers block that. setting the iframe src -->
+<!-- directly inside the click handler is more reliable than the postMessage-based -->
+<!-- IFrame API, especially when testing from a file:// url. -->
+<!-- localStorage remembers whether it was playing + roughly how far in, so clicking -->
+<!-- a nav link to another page resumes close to where it left off (best-effort -- -->
+<!-- this is a plain multi-page site, not a single-page app, so it can't be perfectly -->
+<!-- seamless, and some browsers may still block the auto-resume without a fresh click). -->
+<div class="music-widget" id="music-widget">
+<div class="yt-frame-wrap">
+<iframe id="yt-frame" width="200" height="113" frameborder="0" allow="autoplay"></iframe>
+<button class="minimize-btn" id="minimize-btn" type="button" title="minimize">−</button>
+</div>
+<button class="music-toggle" id="music-toggle" type="button">♪ play music</button>
+</div>
+<script>
+  var ytFrame = document.getElementById('yt-frame');
+  var ytBase = 'https://www.youtube.com/embed/rV08uG_jt5o?autoplay=1&loop=1&playlist=rV08uG_jt5o&controls=0';
+  var toggleBtn = document.getElementById('music-toggle');
+  var widget = document.getElementById('music-widget');
+  var minimizeBtn = document.getElementById('minimize-btn');
+  var ytPlaying = false;
+
+  function startMusic(resumeSeconds) {
+    var src = ytBase;
+    if (resumeSeconds) {
+      src += '&start=' + Math.floor(resumeSeconds);
+    }
+    ytFrame.src = src;
+    toggleBtn.textContent = '♪ pause music';
+    ytPlaying = true;
+    localStorage.setItem('musicPlaying', '1');
+    localStorage.setItem('musicStartedAt', Date.now() - (resumeSeconds ? resumeSeconds * 1000 : 0));
+  }
+
+  function stopMusic() {
+    ytFrame.src = '';
+    toggleBtn.textContent = '♪ play music';
+    ytPlaying = false;
+    localStorage.setItem('musicPlaying', '0');
+  }
+
+  toggleBtn.addEventListener('click', function () {
+    if (ytPlaying) {
+      stopMusic();
+    } else {
+      startMusic();
+    }
+  });
+
+  if (localStorage.getItem('musicPlaying') === '1') {
+    var startedAt = parseInt(localStorage.getItem('musicStartedAt'), 10) || Date.now();
+    startMusic((Date.now() - startedAt) / 1000);
+  }
+
+  function setMinimized(min) {
+    widget.classList.toggle('minimized', min);
+    minimizeBtn.textContent = min ? '+' : '−';
+    localStorage.setItem('musicMinimized', min ? '1' : '0');
+  }
+
+  minimizeBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    setMinimized(!widget.classList.contains('minimized'));
+  });
+
+  setMinimized(localStorage.getItem('musicMinimized') === '1');
+
+  /* moves the widget to the bottom-center if there isn't enough room beside */
+  /* the page card to show it without overlapping */
+  (function () {
+    var pageBox = document.querySelector('.오이');
+
+    function reposition() {
+      var rect = pageBox.getBoundingClientRect();
+      var sideSpace = window.innerWidth - rect.right;
+      widget.classList.toggle('music-widget--bottom', sideSpace < 220);
+    }
+
+    window.addEventListener('resize', reposition);
+    window.addEventListener('load', reposition);
+    reposition();
+  })();
+</script>
+
+  <script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;ce20e5ce7e674558bc949d8aa935cdea&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+    
+
+</body><div id="cvh-filters-container" style="height: 0px; width: 0px; overflow: hidden; position: fixed; top: 0px; left: 0px; z-index: -9999; visibility: hidden; pointer-events: none;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1"><defs>
+      <filter id="cvh-simulate-protanopia">
+        <feColorMatrix type="matrix" values="0.567 0.433 0 0 0
+                                             0.558 0.442 0 0 0
+                                             0 0.242 0.758 0 0
+                                             0 0 0 1 0"></feColorMatrix>
+      </filter>
+    
+
+      <filter id="cvh-simulate-deuteranopia">
+        <feColorMatrix type="matrix" values="0.625 0.375 0 0 0
+                                             0.7 0.3 0 0 0
+                                             0 0.3 0.7 0 0
+                                             0 0 0 1 0"></feColorMatrix>
+      </filter>
+    
+
+      <filter id="cvh-simulate-tritanopia">
+        <feColorMatrix type="matrix" values="0.95 0.05 0 0 0
+                                             0 0.433 0.567 0 0
+                                             0 0.475 0.525 0 0
+                                             0 0 0 1 0"></feColorMatrix>
+      </filter>
+    
+
+      <filter id="cvh-correct-protanopia">
+        <feColorMatrix type="matrix" values="1.0 0.0 0.0 0 0
+                                             -0.255 1.255 0.0 0 0
+                                             0.303 -0.545 1.242 0 0
+                                             0 0 0 1 0"></feColorMatrix>
+      </filter>
+    
+
+      <filter id="cvh-correct-deuteranopia">
+         <feColorMatrix type="matrix" values="1.0 0.0 0.0 0 0
+                                              0.0 1.0 0.0 0 0
+                                              -0.2 0.2 1.0 0 0
+                                              0 0 0 1 0"></feColorMatrix>
+      </filter>
+    
+
+      <filter id="cvh-correct-tritanopia">
+         <feColorMatrix type="matrix" values="1.0 0.0 0.0 0 0
+                                              0.0 1.0 0.0 0 0
+                                              0.0 -0.4 1.4 0 0
+                                              0 0 0 1 0"></feColorMatrix>
+      </filter>
+    </defs></svg></div></html>
