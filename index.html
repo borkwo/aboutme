@@ -224,6 +224,12 @@ padding:5px;
 text-align:center;
 }
 
+/* makes the whole tab clickable instead of just the word -- the <a> fills the */
+/* full width of the tab (the existing text-align:center on .떡 still centers the text) */
+.떡 a {
+display:block;
+}
+
 /* this is that little description info under the navigation area. it has its own div */
 .ㅅㅂ {
 padding:15px 5px 5px 5px;
@@ -236,21 +242,14 @@ padding:15px 5px 5px 5px;
   }
 }
 
-/* the background music button -- docked to the bottom-right by default, but JS */
-/* switches it to centered, just below the page card (.music-widget--bottom) whenever */
-/* there isn't enough room beside the card to show it without overlapping */
+/* the background music button -- docked to the bottom-right, but JS hides it entirely */
+/* on narrow/mobile screens where there isn't enough room beside the card to show it */
+/* without overlapping */
 .music-widget {
 position:fixed;
 bottom:10px;
 right:10px;
 z-index:9999;
-}
-
-.music-widget.music-widget--bottom {
-right:auto;
-left:50%;
-bottom:auto;
-transform:translateX(-50%);
 }
 
 .music-toggle {
@@ -330,7 +329,7 @@ font-weight:bold;
     <div class="복숭이">
         <!-- left div -->
     	<div class="포도">
-      <img src="https://i.ibb.co/VWKZgRhp/ezgif-7ef0700dc385e6cd.gif" style="float:left;padding-right:5px;"> Hi, im bork(Aaron) and welcome to my <i>dungeon.</i> My hobbies include competitve programming, competitve swimming, and chess! Love to read/watch about anything and free feel to give me some recs :)<br><br>
+      <img src="https://i.ibb.co/VWKZgRhp/ezgif-7ef0700dc385e6cd.gif" style="float:left;padding-right:5px;"> Hi, im bork(Aaron) and welcome to my <i>dungeon.</i> My hobbies include competitve programming, competitve swimming, and chess! I Love to read/watch about anything, so free feel to give me some recs :)<br><br>
       Looking for where to go next? check out some pics i've taken! <br>|╯°□°)╯︵┻━┻
       </div>
       <!-- right div -->
@@ -403,7 +402,7 @@ font-weight:bold;
 </div>
 <script>
   var ytFrame = document.getElementById('yt-frame');
-  var ytBase = 'https://www.youtube.com/embed/rV08uG_jt5o?autoplay=1&loop=1&playlist=rV08uG_jt5o&controls=0';
+  var ytBase = 'https://www.youtube.com/embed/rV08uG_jt5o?autoplay=1&loop=1&playlist=rV08uG_jt5o&controls=0&playsinline=1';
   var toggleBtn = document.getElementById('music-toggle');
   var widget = document.getElementById('music-widget');
   var ytPlaying = false;
@@ -440,22 +439,18 @@ font-weight:bold;
     startMusic((Date.now() - startedAt) / 1000);
   }
 
-  /* moves the button to sit centered, just below the page card, if there isn't enough */
-  /* room beside the card to show it without overlapping. tracks scroll too, since a */
-  /* fixed-position element doesn't otherwise follow the card as the page scrolls. */
+  /* hides the button entirely on narrow/mobile screens where there isn't enough room */
+  /* beside the page card to show it without overlapping */
   (function () {
     var pageBox = document.querySelector('.오이');
 
     function reposition() {
       var rect = pageBox.getBoundingClientRect();
       var sideSpace = window.innerWidth - rect.right;
-      var useBottom = sideSpace < 150;
-      widget.classList.toggle('music-widget--bottom', useBottom);
-      widget.style.top = useBottom ? (rect.bottom + 10) + 'px' : '';
+      widget.style.display = sideSpace < 150 ? 'none' : 'flex';
     }
 
     window.addEventListener('resize', reposition);
-    window.addEventListener('scroll', reposition);
     window.addEventListener('load', reposition);
     reposition();
   })();
