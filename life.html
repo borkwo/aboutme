@@ -183,6 +183,12 @@ padding:5px;
 text-align:center;
 }
 
+/* makes the whole tab clickable instead of just the word -- the <a> fills the */
+/* full width of the tab (the existing text-align:center on .떡 still centers the text) */
+.떡 a {
+display:block;
+}
+
 /* little description area under nav */
 .ㅅㅂ {
 padding:15px 5px 5px 5px;
@@ -210,32 +216,14 @@ border:1px solid black;
   }
 }
 
-/* the background music widget -- docked to the bottom-right by default, but JS */
-/* switches it to centered, just below the page card (.music-widget--bottom) whenever */
-/* there isn't enough room beside the card to show it without overlapping */
+/* the background music button -- docked to the bottom-right, but JS hides it entirely */
+/* on narrow/mobile screens where there isn't enough room beside the card to show it */
+/* without overlapping */
 .music-widget {
 position:fixed;
 bottom:10px;
 right:10px;
 z-index:9999;
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:4px;
-}
-
-/* the player needs a real, non-zero visible size -- mobile Safari's autoplay */
-/* heuristics specifically distrust hidden/0x0 media (a common ad/tracker pattern) */
-/* and will silently block autoplay on it even with a real click behind it */
-#yt-frame {
-display:block;
-}
-
-.music-widget.music-widget--bottom {
-right:auto;
-left:50%;
-bottom:auto;
-transform:translateX(-50%);
 }
 
 .music-toggle {
@@ -363,8 +351,10 @@ font-weight:bold;
 <!-- a nav link to another page resumes close to where it left off (best-effort -- -->
 <!-- this is a plain multi-page site, not a single-page app, so it can't be perfectly -->
 <!-- seamless, and some browsers may still block the auto-resume without a fresh click). -->
+<div style="position:absolute;width:0px;height:0px;overflow:hidden;">
+<iframe id="yt-frame" width="1" height="1" frameborder="0" allow="autoplay"></iframe>
+</div>
 <div class="music-widget" id="music-widget">
-<iframe id="yt-frame" width="60" height="34" frameborder="0" allow="autoplay" style="border:1px solid black;"></iframe>
 <button class="music-toggle" id="music-toggle" type="button">♪ play music</button>
 </div>
 <script>
@@ -406,22 +396,18 @@ font-weight:bold;
     startMusic((Date.now() - startedAt) / 1000);
   }
 
-  /* moves the button to sit centered, just below the page card, if there isn't enough */
-  /* room beside the card to show it without overlapping. tracks scroll too, since a */
-  /* fixed-position element doesn't otherwise follow the card as the page scrolls. */
+  /* hides the button entirely on narrow/mobile screens where there isn't enough room */
+  /* beside the page card to show it without overlapping */
   (function () {
     var pageBox = document.querySelector('.container');
 
     function reposition() {
       var rect = pageBox.getBoundingClientRect();
       var sideSpace = window.innerWidth - rect.right;
-      var useBottom = sideSpace < 150;
-      widget.classList.toggle('music-widget--bottom', useBottom);
-      widget.style.top = useBottom ? (rect.bottom + 10) + 'px' : '';
+      widget.style.display = sideSpace < 150 ? 'none' : 'flex';
     }
 
     window.addEventListener('resize', reposition);
-    window.addEventListener('scroll', reposition);
     window.addEventListener('load', reposition);
     reposition();
   })();
