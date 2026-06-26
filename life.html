@@ -210,7 +210,7 @@ border:1px solid black;
   }
 }
 
-/* the background music button -- docked to the bottom-right by default, but JS */
+/* the background music widget -- docked to the bottom-right by default, but JS */
 /* switches it to centered, just below the page card (.music-widget--bottom) whenever */
 /* there isn't enough room beside the card to show it without overlapping */
 .music-widget {
@@ -218,6 +218,17 @@ position:fixed;
 bottom:10px;
 right:10px;
 z-index:9999;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px;
+}
+
+/* the player needs a real, non-zero visible size -- mobile Safari's autoplay */
+/* heuristics specifically distrust hidden/0x0 media (a common ad/tracker pattern) */
+/* and will silently block autoplay on it even with a real click behind it */
+#yt-frame {
+display:block;
 }
 
 .music-widget.music-widget--bottom {
@@ -352,15 +363,13 @@ font-weight:bold;
 <!-- a nav link to another page resumes close to where it left off (best-effort -- -->
 <!-- this is a plain multi-page site, not a single-page app, so it can't be perfectly -->
 <!-- seamless, and some browsers may still block the auto-resume without a fresh click). -->
-<div style="position:absolute;width:0px;height:0px;overflow:hidden;">
-<iframe id="yt-frame" width="1" height="1" frameborder="0" allow="autoplay"></iframe>
-</div>
 <div class="music-widget" id="music-widget">
+<iframe id="yt-frame" width="60" height="34" frameborder="0" allow="autoplay" style="border:1px solid black;"></iframe>
 <button class="music-toggle" id="music-toggle" type="button">♪ play music</button>
 </div>
 <script>
   var ytFrame = document.getElementById('yt-frame');
-  var ytBase = 'https://www.youtube.com/embed/rV08uG_jt5o?autoplay=1&loop=1&playlist=rV08uG_jt5o&controls=0';
+  var ytBase = 'https://www.youtube.com/embed/rV08uG_jt5o?autoplay=1&loop=1&playlist=rV08uG_jt5o&controls=0&playsinline=1';
   var toggleBtn = document.getElementById('music-toggle');
   var widget = document.getElementById('music-widget');
   var ytPlaying = false;
