@@ -236,53 +236,21 @@ padding:15px 5px 5px 5px;
   }
 }
 
-/* the background music widget -- docked to the bottom-right by default, but JS */
-/* switches it to bottom-center (.music-widget--bottom) whenever there isn't enough */
-/* room beside the page card to show it without overlapping */
+/* the background music button -- docked to the bottom-right by default, but JS */
+/* switches it to centered, just below the page card (.music-widget--bottom) whenever */
+/* there isn't enough room beside the card to show it without overlapping */
 .music-widget {
 position:fixed;
 bottom:10px;
 right:10px;
 z-index:9999;
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:5px;
 }
 
 .music-widget.music-widget--bottom {
 right:auto;
 left:50%;
+bottom:auto;
 transform:translateX(-50%);
-}
-
-.yt-frame-wrap {
-position:relative;
-}
-
-.music-widget.minimized .yt-frame-wrap {
-display:none;
-}
-
-.minimize-btn {
-position:absolute;
-top:-8px;
-right:-8px;
-width:18px;
-height:18px;
-line-height:16px;
-text-align:center;
-font-size:12px;
-background-color: #FFD0D0;
-border:1px solid black;
-border-radius:50%;
-padding:0px;
-cursor: url("https://i.ibb.co/zVtVVfR0/download-2-1.png"), auto;
-}
-
-.minimize-btn:hover {
-background-color: #CA8787;
-color:#FFEFEF;
 }
 
 .music-toggle {
@@ -427,11 +395,10 @@ font-weight:bold;
 <!-- a nav link to another page resumes close to where it left off (best-effort -- -->
 <!-- this is a plain multi-page site, not a single-page app, so it can't be perfectly -->
 <!-- seamless, and some browsers may still block the auto-resume without a fresh click). -->
-<div class="music-widget" id="music-widget">
-<div class="yt-frame-wrap">
-<iframe id="yt-frame" width="200" height="113" frameborder="0" allow="autoplay"></iframe>
-<button class="minimize-btn" id="minimize-btn" type="button" title="minimize">−</button>
+<div style="position:absolute;width:0px;height:0px;overflow:hidden;">
+<iframe id="yt-frame" width="1" height="1" frameborder="0" allow="autoplay"></iframe>
 </div>
+<div class="music-widget" id="music-widget">
 <button class="music-toggle" id="music-toggle" type="button">♪ play music</button>
 </div>
 <script>
@@ -439,7 +406,6 @@ font-weight:bold;
   var ytBase = 'https://www.youtube.com/embed/rV08uG_jt5o?autoplay=1&loop=1&playlist=rV08uG_jt5o&controls=0';
   var toggleBtn = document.getElementById('music-toggle');
   var widget = document.getElementById('music-widget');
-  var minimizeBtn = document.getElementById('minimize-btn');
   var ytPlaying = false;
 
   function startMusic(resumeSeconds) {
@@ -474,31 +440,22 @@ font-weight:bold;
     startMusic((Date.now() - startedAt) / 1000);
   }
 
-  function setMinimized(min) {
-    widget.classList.toggle('minimized', min);
-    minimizeBtn.textContent = min ? '+' : '−';
-    localStorage.setItem('musicMinimized', min ? '1' : '0');
-  }
-
-  minimizeBtn.addEventListener('click', function (e) {
-    e.stopPropagation();
-    setMinimized(!widget.classList.contains('minimized'));
-  });
-
-  setMinimized(localStorage.getItem('musicMinimized') === '1');
-
-  /* moves the widget to the bottom-center if there isn't enough room beside */
-  /* the page card to show it without overlapping */
+  /* moves the button to sit centered, just below the page card, if there isn't enough */
+  /* room beside the card to show it without overlapping. tracks scroll too, since a */
+  /* fixed-position element doesn't otherwise follow the card as the page scrolls. */
   (function () {
     var pageBox = document.querySelector('.오이');
 
     function reposition() {
       var rect = pageBox.getBoundingClientRect();
       var sideSpace = window.innerWidth - rect.right;
-      widget.classList.toggle('music-widget--bottom', sideSpace < 220);
+      var useBottom = sideSpace < 150;
+      widget.classList.toggle('music-widget--bottom', useBottom);
+      widget.style.top = useBottom ? (rect.bottom + 10) + 'px' : '';
     }
 
     window.addEventListener('resize', reposition);
+    window.addEventListener('scroll', reposition);
     window.addEventListener('load', reposition);
     reposition();
   })();
