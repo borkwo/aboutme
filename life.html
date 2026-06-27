@@ -1,12 +1,5 @@
 <html lang="en"><head>
 
-<!--
-life(pics) page. same navbar/header/footer as index.html.
-content area (.콘텐츠) is set to auto-height so the photo grid
-grows downward as pics get added (e.g. from supabase storage)
-instead of spilling out.
--->
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -16,7 +9,6 @@ instead of spilling out.
 
   <style>
 
-/* link styling! do whatever!! */
 a:link {
 text-decoration: none;
 color:black;
@@ -38,16 +30,12 @@ a:active {
 text-decoration: none;
 color:black;
 }
-/* end of link styling */
 
-/* keeps padding/borders from blowing up sizes on small screens */
-/* also sets the custom cursor site-wide */
 * {
 box-sizing: border-box;
 cursor: url("https://i.ibb.co/zVtVVfR0/download-2-1.png"), auto;
 }
 
-/* so images never overflow their container on narrow screens */
 img {
 max-width: 100%;
 height: auto;
@@ -66,9 +54,6 @@ padding:10px;
 overflow:auto;
 }
 
-/* wraps the container so it can be scaled down to fit small screens. */
-/* flex + justify-content:center centers .container whether it's at full size or scaled down -- */
-/* see the script near the closing body tag */
 .scale-wrap {
   width:100%;
   overflow:hidden;
@@ -77,8 +62,6 @@ overflow:auto;
   align-items:flex-start;
 }
 
-/* mother grid. no fixed height anymore -- grows with content */
-/* width matches index.html's actual content box (600px) so both pages line up */
 .container {
   width:600px;
   flex-shrink:0;
@@ -87,23 +70,20 @@ overflow:auto;
   position:relative;
 }
 
-/* page grid: header / tagline / nav+content / footer */
-/* nav:content ratio (0.8fr : 2.2fr) matches index.html's 수박/복숭이 split */
-.오이 {
+.page {
   display: grid;
   grid-template-columns: 0.8fr 2.2fr;
   grid-template-rows: auto auto auto auto;
   gap: 0px 0px;
   grid-template-areas:
-    "우유 우유"
-    "딸기 딸기"
-    "수박 콘텐츠"
-    "사과 사과";
+    "banner banner"
+    "tagline tagline"
+    "nav content"
+    "footer footer";
 }
 
-/* header banner -- fixed height since it's just a background-image with no content */
-.우유 {
-grid-area: 우유;
+.banner {
+grid-area: banner;
 border:1px solid black;
 border-bottom:none;
 background-image:url("https://i.ibb.co/gFjmcs6z/Untitled-design-6.png");
@@ -113,18 +93,16 @@ background-repeat:no-repeat;
 height:250px;
 }
 
-/* cute text under header */
-.딸기 {
-grid-area: 딸기;
+.tagline {
+grid-area: tagline;
 border:1px solid black;
 padding:1px;
 background-color:white;
 text-align:center;
 }
 
-/* nav sidebar */
-.수박 {
-grid-area: 수박;
+.nav {
+grid-area: nav;
 border:1px solid black;
 border-top:none;
 border-right:none;
@@ -132,12 +110,8 @@ background-color:white;
 padding:0px 0px 5px 0px;
 }
 
-/* content area -- this is what will hold supabase photos.
-   no fixed height/overflow, so it just expands downward. */
-/* flex column keeps the intro text pinned to the top while the photo grid (flex:1, below) */
-/* centers itself within whatever leftover space comes from stretching to match the nav's height */
-.콘텐츠 {
-grid-area: 콘텐츠;
+.content {
+grid-area: content;
 display:flex;
 flex-direction:column;
 border:1px solid black;
@@ -147,17 +121,15 @@ padding:10px;
 min-height:500px;
 }
 
-/* footer */
-.사과 {
-grid-area: 사과;
+.footer {
+grid-area: footer;
 border:1px solid black;
 text-align:center;
 padding:1px;
 background-color:white;
 }
 
-/* navigation buttons */
-.떡 {
+.nav-item {
 background-color: #D4D4D4;
 background-image:url("");
 border:1px groove black;
@@ -169,7 +141,7 @@ padding:5px;
 text-align:center;
 }
 
-.떡:hover {
+.nav-item:hover {
 background-color: #888888;
 background-image:url("");
 border:1px groove black;
@@ -183,18 +155,14 @@ padding:5px;
 text-align:center;
 }
 
-/* makes the whole tab clickable instead of just the word -- the <a> fills the */
-/* full width of the tab (the existing text-align:center on .떡 still centers the text) */
-.떡 a {
+.nav-item a {
 display:block;
 }
 
-/* little description area under nav */
-.ㅅㅂ {
+.nav-info {
 padding:15px 5px 5px 5px;
 }
 
-/* === photo grid, swap the img src's out for supabase storage urls later === */
 .photo-grid {
 display:grid;
 grid-template-columns: repeat(3, 1fr);
@@ -209,16 +177,12 @@ object-fit:cover;
 border:1px solid black;
 }
 
-/* a little extra width back on tiny phones */
 @media (max-width: 480px) {
   body {
     padding:4px;
   }
 }
 
-/* the background music button -- docked to the bottom-right, but JS hides it entirely */
-/* on narrow/mobile screens where there isn't enough room beside the card to show it */
-/* without overlapping */
 .music-widget {
 position:fixed;
 bottom:10px;
@@ -244,8 +208,6 @@ font-style:italic;
 font-weight:bold;
 }
 
-/* custom scrollbar -- windows 7 aero-ish glossy look, grey/white/black metallic/chrome */
-/* palette, with a soft white glow on the thumb and a faint tick-mark track texture */
 ::-webkit-scrollbar {
 width:17px;
 height:17px;
@@ -290,7 +252,6 @@ background: linear-gradient(to bottom, #ffffff, #888888);
 background-color: #e8e8e8;
 }
 
-/* firefox only supports flat colors (no gradients/glow), but it's still on-theme */
 html {
 scrollbar-width: auto;
 scrollbar-color: #999999 #e8e8e8;
@@ -302,50 +263,47 @@ scrollbar-color: #999999 #e8e8e8;
 
   <body>
 
-<!-- this wrapper lets the whole layout below get scaled down to fit small screens -->
 <div class="scale-wrap">
 
 <div class="container">
 
-  <div class="오이">
+  <div class="page">
 
-    <div class="우유">
+    <div class="banner">
     </div>
 
-    <div class="딸기">
+    <div class="tagline">
      ⋆ welcome to my <font color="#333333">dungeon</font> fellow visitor ⋆
     </div>
 
-    <div class="수박">
+    <div class="nav">
 
-    	<div class="떡" style="border-bottom:none;border-top:none;background-color:#888888;">
+    	<div class="nav-item" style="border-bottom:none;border-top:none;background-color:#888888;">
         <b>navigation</b>
         </div>
-        <div class="떡" style="border-bottom:none;">
+        <div class="nav-item" style="border-bottom:none;">
         <a href="index.html">home</a>
         </div>
-        <div class="떡" style="border-bottom:none;">
+        <div class="nav-item" style="border-bottom:none;">
         <a href="https://open.spotify.com/user/31kpk6e77t5vb7qplrl6tqibyw4e">spotify</a>
         </div>
-        <div class="떡" style="border-bottom:none;">
+        <div class="nav-item" style="border-bottom:none;">
         <a href="https://myanimelist.net/profile/borkwo">MAL</a>
         </div>
-        <div class="떡" style="border-bottom:none;background-color:#888888;">
+        <div class="nav-item" style="border-bottom:none;background-color:#888888;">
         <b>personal</b>
         </div>
-        <div class="떡" style="background-color:#888888;">
+        <div class="nav-item" style="background-color:#888888;">
         <a href="" style="cursor: not-allowed;"><b>life(pics)</b></a>
         </div>
 
-     <div class="ㅅㅂ">Hello, ¡Hola!, Bonjour, Hallo, Ciao, Olá, こんにちは, 你好, 안녕하세요, नमस्ते, مرحبا, Привет, Aloha
+     <div class="nav-info">Hello, ¡Hola!, Bonjour, Hallo, Ciao, Olá, こんにちは, 你好, 안녕하세요, नमस्ते, مرحبا, Привет, Aloha
 
      <center><img src="https://i.ibb.co/PZRKYddn/Untitled-design-9.png" style="width:140px;margin-top:18px;border:1px solid black;"></center>
      </div>
     </div>
 
-    <!-- photos go here. each img below is a placeholder image -- -->
-    <!-- replace the src's with real photo urls loaded from supabase storage -->
-    <div class="콘텐츠" id="photo-grid">
+    <div class="content" id="photo-grid">
 
       <p style="margin:0;flex:1;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;"> random pics from my life. <i></i></p>
 
@@ -363,7 +321,7 @@ scrollbar-color: #999999 #e8e8e8;
 
     </div>
 
-    <div class="사과">
+    <div class="footer">
     last edited (<b>6/26/2026</b>) , inspo from rice.place & nekoweb.org.
     </div>
 
@@ -373,9 +331,6 @@ scrollbar-color: #999999 #e8e8e8;
 
 </div>
 
-<!-- scales the .container down to fit the screen width on small devices, -->
-<!-- keeping the exact same layout instead of reflowing it into one column. -->
-<!-- re-runs on resize and whenever content inside changes (e.g. once supabase data loads in). -->
 <script>
 (function () {
   var wrap = document.querySelector('.scale-wrap');
@@ -395,14 +350,6 @@ scrollbar-color: #999999 #e8e8e8;
 })();
 </script>
 
-<!-- background music widget. click to play/stop -- can't autoplay with sound -->
-<!-- without a user gesture first, browsers block that. setting the iframe src -->
-<!-- directly inside the click handler is more reliable than the postMessage-based -->
-<!-- IFrame API, especially when testing from a file:// url. -->
-<!-- localStorage remembers whether it was playing + roughly how far in, so clicking -->
-<!-- a nav link to another page resumes close to where it left off (best-effort -- -->
-<!-- this is a plain multi-page site, not a single-page app, so it can't be perfectly -->
-<!-- seamless, and some browsers may still block the auto-resume without a fresh click). -->
 <div style="position:absolute;width:0px;height:0px;overflow:hidden;">
 <iframe id="yt-frame" width="1" height="1" frameborder="0" allow="autoplay"></iframe>
 </div>
@@ -448,8 +395,6 @@ scrollbar-color: #999999 #e8e8e8;
     startMusic((Date.now() - startedAt) / 1000);
   }
 
-  /* hides the button entirely on narrow/mobile screens where there isn't enough room */
-  /* beside the page card to show it without overlapping */
   (function () {
     var pageBox = document.querySelector('.container');
 
