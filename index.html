@@ -1,26 +1,16 @@
 <html lang="en"><head>
 
-<!--
-theme inspired by oooeee@nekoweb.org
-
-calendar code is from https://www.javascriptfreecode.com/36.htm !
--->
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- this is where you can have your style.css placed here if you want a cleaner code! -->
 <link href="style.css" rel="stylesheet" type="text/css" media="all">
 
-  <!-- the favicon image of your site! --> 
   <link rel="icon" type="image/png" href="https://i.ibb.co/zWxtg9GS/download-1.png">
-  
-  <!-- this is the title that shows up on the tab! remove this when you have a title! -->
+
   <title>borkwo's dungeon</title>
-        
+
   <style>
 
-/* link styling! do whatever!! */
 a:link {
 text-decoration: none;
 color:black;
@@ -42,22 +32,17 @@ a:active {
 text-decoration: none;
 color:black;
 }
-/* end of link styling */
 
-/* keeps padding/borders from blowing up sizes on small screens */
-/* also sets the custom cursor site-wide */
 * {
 box-sizing: border-box;
 cursor: url("https://i.ibb.co/zVtVVfR0/download-2-1.png"), auto;
 }
 
-/* so images never overflow their container on narrow screens */
 img {
 max-width: 100%;
 height: auto;
 }
 
-/* these are what you need. background color/image, font color and what font you want to use */
 body{
 font-family:ms gothic;
 font-size:14px;
@@ -71,9 +56,6 @@ padding:10px;
 overflow:auto;
 }
 
-/* wraps the container so it can be scaled down to fit small screens. */
-/* flex + justify-content:center centers .오이 whether it's at full size or scaled down -- */
-/* see the script near the closing body tag */
 .scale-wrap {
   width:100%;
   overflow:hidden;
@@ -82,33 +64,25 @@ overflow:auto;
   align-items:flex-start;
 }
 
-/* these are the mother grids kids! */
-/* (this used to sit inside a wider 900px "mother grid" .container that left empty */
-/* columns on either side -- now it's the directly-sized box, so on small screens */
-/* scaling it down actually fills the screen instead of scaling the wasted margins too) */
-/* rows are auto now (matching life/blog/art's pattern) instead of fixed fr-of-800px -- */
-/* that fixed-height system was making 수박/복숭이 stretch to different proportions than the other pages */
-.오이 {
+.page {
   display: grid;
   grid-template-columns: 0.8fr 1.2fr 1fr;
   grid-template-rows: auto auto auto auto;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
-    "우유 우유 우유"
-    "딸기 딸기 딸기"
-    "수박 복숭이 복숭이"
-    "사과 사과 사과";
+    "banner banner banner"
+    "tagline tagline tagline"
+    "nav bio bio"
+    "footer footer footer";
   width:600px;
   flex-shrink:0;
   transform-origin: center top;
   position:relative;
 }
 
-/* header shit! -- explicit height since it's just a background-image with no content */
-/* (matches life/blog/art's banner height exactly) */
-.우유 {
-grid-area: 우유;
+.banner {
+grid-area: banner;
 border:1px solid black;
 border-bottom:none;
 background-image:url("https://i.ibb.co/gFjmcs6z/Untitled-design-6.png");
@@ -118,19 +92,16 @@ background-repeat:no-repeat;
 height:250px;
 }
 
-/* that little cute text under the header! */
-.딸기 { 
-grid-area: 딸기; 
+.tagline {
+grid-area: tagline;
 border:1px solid black;
 padding:1px;
 background-color:white;
 text-align:center;
 }
 
-/* this is where the .떡 and .ㅅㅂ is. */
-/* you can erase those and make an entirely new navigation style! */
-.수박 {
-grid-area: 수박;
+.nav {
+grid-area: nav;
 border:1px solid black;
 border-top:none;
 border-right:none;
@@ -138,64 +109,47 @@ background-color:white;
 padding:0px 0px 5px 0px;
 }
 
-/* this is the mother grids grandkids */
-/* no longer a grid -- the calendar just floats right so the bio text wraps around it, */
-/* and .씨발 (the image + more text) starts right after the bio text ends instead of */
-/* waiting on a shared grid row's height */
-.복숭이 {
-grid-area: 복숭이;
+.bio {
+grid-area: bio;
 border:1px solid black;
 border-top:none;
 background-color:white;
 padding:5px;
 }
 
-/* this is for the calendar! on the right! -- explicit height since the iframe's */
-/* height="100%" attribute needs a definite parent height to resolve against. */
-/* comes first in the markup so the bio text below wraps around it from the start */
-.ㅠㅠ {
+.calendar {
 float:right;
 width:190px;
 padding:0px;
 margin:0px 0px 5px 8px;
 }
 
-/* it's a cross-origin iframe (rice.place's own calendar page) so its internal CSS */
-/* can't be edited directly -- filter works on iframes regardless of cross-origin */
-/* restrictions since it just filters the rendered pixels, not the content itself */
 #frame {
 height:200px;
 width:100%;
 filter: grayscale(1);
 }
 
-/* this is the site info on the left! */
-.포도 {
+.bio-text {
 padding:5px 5px 0px 5px;
 line-height:110%;
 }
 
-/* more area under the site info and calendar divs! -- clear:right guarantees this */
-/* starts full-width (not squeezed beside the calendar) regardless of whether the */
-/* calendar or the bio text above is taller */
-.씨발 {
+.details {
 clear:right;
 padding:0px 5px 5px 5px;
 line-height:110%;
 }
 
-/* this is the footer! */
-.사과 { 
-grid-area: 사과; 
+.footer {
+grid-area: footer;
 border:1px solid black;
 text-align:center;
 padding:1px;
 background-color:white;
 }
 
-/* this is the navigation area where they have their own divs */
-/* of course you can change this! doesn't have to be in it's own div box! */
-.떡 {
+.nav-item {
 background-color: #D4D4D4;
 background-image:url("");
 border:1px groove black;
@@ -207,8 +161,7 @@ padding:5px;
 text-align:center;
 }
 
-/* this is the navigation area but on hover */
-.떡:hover {
+.nav-item:hover {
 background-color: #888888;
 background-image:url("");
 border:1px groove black;
@@ -222,27 +175,20 @@ padding:5px;
 text-align:center;
 }
 
-/* makes the whole tab clickable instead of just the word -- the <a> fills the */
-/* full width of the tab (the existing text-align:center on .떡 still centers the text) */
-.떡 a {
+.nav-item a {
 display:block;
 }
 
-/* this is that little description info under the navigation area. it has its own div */
-.ㅅㅂ {
+.nav-info {
 padding:15px 5px 5px 5px;
 }
 
-/* a little extra width back on tiny phones */
 @media (max-width: 480px) {
   body {
     padding:4px;
   }
 }
 
-/* the background music button -- docked to the bottom-right, but JS hides it entirely */
-/* on narrow/mobile screens where there isn't enough room beside the card to show it */
-/* without overlapping */
 .music-widget {
 position:fixed;
 bottom:10px;
@@ -268,8 +214,6 @@ font-style:italic;
 font-weight:bold;
 }
 
-/* custom scrollbar -- windows 7 aero-ish glossy look, grey/white/black metallic/chrome */
-/* palette, with a soft white glow on the thumb and a faint tick-mark track texture */
 ::-webkit-scrollbar {
 width:17px;
 height:17px;
@@ -314,89 +258,71 @@ background: linear-gradient(to bottom, #ffffff, #888888);
 background-color: #e8e8e8;
 }
 
-/* firefox only supports flat colors (no gradients/glow), but it's still on-theme */
 html {
 scrollbar-width: auto;
 scrollbar-color: #999999 #e8e8e8;
 }
 
   </style>
-        
+
 </head>
-    
+
   <body>
 
-<!-- this wrapper lets the whole layout below get scaled down to fit small screens -->
 <div class="scale-wrap">
 
-<!-- the mother grid -->
-  <div class="오이">
+  <div class="page">
 
-    <div class="우유">
-  <!-- this is where the header is located at. -->
-  <!-- where is it? in the styling area -->    
+    <div class="banner">
     </div>
-    
-    <!-- that cute text under header -->
-    <div class="딸기">
+
+    <div class="tagline">
      ⋆ welcome to my <font color="#333333">dungeon</font> fellow visitor ⋆
     </div>
-    
-    <!-- the div that holds the navigation -->
-    <div class="수박">
-    
-    	<!-- 떡 is its own div, which are the navigations -->
-    	<!-- style="border-bottom:none; is needed! but of course you can completely change the navi system! -->
-    	<!-- you can remove style="cursor: not-allowed;! i put it there because there is no link provided! -->
-    	<div class="떡" style="border-bottom:none;border-top:none;background-color:#888888;">
+
+    <div class="nav">
+
+    	<div class="nav-item" style="border-bottom:none;border-top:none;background-color:#888888;">
         <b>navigation</b>
         </div>
-        <div class="떡" style="border-bottom:none;background-color:#888888;">
+        <div class="nav-item" style="border-bottom:none;background-color:#888888;">
         <a href="" style="cursor: not-allowed;"><b>home</b></a>
         </div>
-        <div class="떡" style="border-bottom:none;">
+        <div class="nav-item" style="border-bottom:none;">
         <a href="https://open.spotify.com/user/31kpk6e77t5vb7qplrl6tqibyw4e">spotify</a>
         </div>
-        <div class="떡" style="border-bottom:none;">
+        <div class="nav-item" style="border-bottom:none;">
         <a href="https://myanimelist.net/profile/borkwo">MAL</a>
         </div>
-        <div class="떡" style="border-bottom:none;background-color:#888888;">
+        <div class="nav-item" style="border-bottom:none;background-color:#888888;">
         <b>personal</b>
         </div>
-        <div class="떡">
+        <div class="nav-item">
         <a href="life.html">life(pics)</a>
         </div>
-        
-     <!-- little div under navigation -->
-     <div class="ㅅㅂ">Hello, ¡Hola!, Bonjour, Hallo, Ciao, Olá, こんにちは, 你好, 안녕하세요, नमस्ते, مرحبا, Привет, Aloha
-     
-     <!-- the image under the little div -->
+
+     <div class="nav-info">Hello, ¡Hola!, Bonjour, Hallo, Ciao, Olá, こんにちは, 你好, 안녕하세요, नमस्ते, مرحبا, Привет, Aloha
+
      <center><img src="https://i.ibb.co/PZRKYddn/Untitled-design-9.png" style="width:140px;margin-top:18px;border:1px solid black;"></center>
      </div>
     </div>
-    
-    <!-- grandkids -->
-    <div class="복숭이">
-        <!-- right div, comes first in the markup so the bio text wraps around it -->
-       <div class="ㅠㅠ">
+
+    <div class="bio">
+       <div class="calendar">
       <iframe id="frame" src="https://rice.place/other/calendar01.html" width="100%" height="100%" frameborder="0"></iframe>
         </div>
-        <!-- left div -->
-    	<div class="포도">
-      <p style="margin:0 0 9.45px 0;"><img src="https://i.ibb.co/VWKZgRhp/ezgif-7ef0700dc385e6cd.gif" style="float:left;padding-right:5px;"> Hi, im bork(Aaron) and welcome to my <i>dungeon.</i> My hobbies include competitve programming, competitve swimming, and chess! I Love to read/watch about anything, so free feel to give me some recs :)</p>
+    	<div class="bio-text">
+      <p style="margin:0 0 9.45px 0;"><img src="https://i.ibb.co/VWKZgRhp/ezgif-7ef0700dc385e6cd.gif" style="float:left;padding-right:5px;"> Hi, i'm bork(Aaron) and welcome to my <i>dungeon.</i> My hobbies include competitve programming, competitve swimming, and chess! I Love to read/watch about anything, so free feel to give me some recs :)</p>
       <p style="margin:0;">Looking for where to go next? check out some pics i've taken! <br>|╯°□°)╯︵┻━┻</p>
       </div>
-        <!-- bottom div -->
-        <div class="씨발">
-        <!-- the image of a kitten and has text above the kitten -->
+        <div class="details">
         <img src="https://i.ibb.co/G4fvdB62/Untitled-design-5.png" style="border:1px solid black;display:block;margin:2.5px auto;">
-        <p style="margin:0 0 9.45px 0;">My favorite game currently is Cybperpunk 2077 (&lt;3 realistic graphics) and I play minecraft/rhythm games time to time. <!-- an image that is floating right as of right now --><img src="https://i.ibb.co/YVpZN4v/ezgif-1e4eda085b59fafa.gif" style="float:right;"> Favorite swimming events include 200 free, 50 free, and 100 back.</p>
+        <p style="margin:0 0 9.45px 0;">My favorite game currently is Cybperpunk 2077 (&lt;3 realistic graphics) and I play minecraft/rhythm games time to time. <img src="https://i.ibb.co/YVpZN4v/ezgif-1e4eda085b59fafa.gif" style="float:right;"> Favorite swimming events include 200 free, 50 free, and 100 back.</p>
         <p style="margin:0;">Outside of my other activites i'm a huge NBA fan (go mavs), and currently a candidates master in codeforces! ("In the midst of chaos, there is also opportunity." - Sun Tzu, The Art of War)</p>
         </div>
     </div>
-    
-    <!-- footer -->
-    <div class="사과">
+
+    <div class="footer">
     last edited (<b>6/26/2026</b>) , inspo from rice.place & nekoweb.org.
     </div>
 
@@ -404,17 +330,11 @@ scrollbar-color: #999999 #e8e8e8;
 
 </div>
 
-<!-- scales the .오이 box down to fit the screen on small devices, keeping the exact -->
-<!-- same layout instead of reflowing it into one column. on phone-width screens it also -->
-<!-- factors in screen height, so the whole card tends to fit on one screen without a gap -->
-<!-- below -- desktop/laptop screens are only ever fit by width (a short laptop screen -->
-<!-- shouldn't shrink the page, that's just normal scrolling). -->
-<!-- re-runs on resize and whenever content inside changes. -->
 <script>
 (function () {
   var PHONE_BREAKPOINT = 700;
   var wrap = document.querySelector('.scale-wrap');
-  var box = document.querySelector('.오이');
+  var box = document.querySelector('.page');
 
   function fit() {
     var scale = Math.min(1, wrap.clientWidth / box.offsetWidth);
@@ -436,14 +356,6 @@ scrollbar-color: #999999 #e8e8e8;
 })();
 </script>
 
-<!-- background music widget. click to play/stop -- can't autoplay with sound -->
-<!-- without a user gesture first, browsers block that. setting the iframe src -->
-<!-- directly inside the click handler is more reliable than the postMessage-based -->
-<!-- IFrame API, especially when testing from a file:// url. -->
-<!-- localStorage remembers whether it was playing + roughly how far in, so clicking -->
-<!-- a nav link to another page resumes close to where it left off (best-effort -- -->
-<!-- this is a plain multi-page site, not a single-page app, so it can't be perfectly -->
-<!-- seamless, and some browsers may still block the auto-resume without a fresh click). -->
 <div style="position:absolute;width:0px;height:0px;overflow:hidden;">
 <iframe id="yt-frame" width="1" height="1" frameborder="0" allow="autoplay"></iframe>
 </div>
@@ -489,10 +401,8 @@ scrollbar-color: #999999 #e8e8e8;
     startMusic((Date.now() - startedAt) / 1000);
   }
 
-  /* hides the button entirely on narrow/mobile screens where there isn't enough room */
-  /* beside the page card to show it without overlapping */
   (function () {
-    var pageBox = document.querySelector('.오이');
+    var pageBox = document.querySelector('.page');
 
     function reposition() {
       var rect = pageBox.getBoundingClientRect();
@@ -508,8 +418,6 @@ scrollbar-color: #999999 #e8e8e8;
 
   <script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;ce20e5ce7e674558bc949d8aa935cdea&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
 
-    
-
 </body><div id="cvh-filters-container" style="height: 0px; width: 0px; overflow: hidden; position: fixed; top: 0px; left: 0px; z-index: -9999; visibility: hidden; pointer-events: none;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1"><defs>
       <filter id="cvh-simulate-protanopia">
         <feColorMatrix type="matrix" values="0.567 0.433 0 0 0
@@ -517,7 +425,7 @@ scrollbar-color: #999999 #e8e8e8;
                                              0 0.242 0.758 0 0
                                              0 0 0 1 0"></feColorMatrix>
       </filter>
-    
+
 
       <filter id="cvh-simulate-deuteranopia">
         <feColorMatrix type="matrix" values="0.625 0.375 0 0 0
@@ -525,7 +433,7 @@ scrollbar-color: #999999 #e8e8e8;
                                              0 0.3 0.7 0 0
                                              0 0 0 1 0"></feColorMatrix>
       </filter>
-    
+
 
       <filter id="cvh-simulate-tritanopia">
         <feColorMatrix type="matrix" values="0.95 0.05 0 0 0
@@ -533,7 +441,7 @@ scrollbar-color: #999999 #e8e8e8;
                                              0 0.475 0.525 0 0
                                              0 0 0 1 0"></feColorMatrix>
       </filter>
-    
+
 
       <filter id="cvh-correct-protanopia">
         <feColorMatrix type="matrix" values="1.0 0.0 0.0 0 0
@@ -541,7 +449,7 @@ scrollbar-color: #999999 #e8e8e8;
                                              0.303 -0.545 1.242 0 0
                                              0 0 0 1 0"></feColorMatrix>
       </filter>
-    
+
 
       <filter id="cvh-correct-deuteranopia">
          <feColorMatrix type="matrix" values="1.0 0.0 0.0 0 0
@@ -549,7 +457,7 @@ scrollbar-color: #999999 #e8e8e8;
                                               -0.2 0.2 1.0 0 0
                                               0 0 0 1 0"></feColorMatrix>
       </filter>
-    
+
 
       <filter id="cvh-correct-tritanopia">
          <feColorMatrix type="matrix" values="1.0 0.0 0.0 0 0
