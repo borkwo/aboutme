@@ -139,36 +139,25 @@ padding:0px 0px 5px 0px;
 }
 
 /* this is the mother grids grandkids */
-/* rows are auto now since 복숭이 itself is no longer forced to a fixed height */
+/* no longer a grid -- the calendar just floats right so the bio text wraps around it, */
+/* and .씨발 (the image + more text) starts right after the bio text ends instead of */
+/* waiting on a shared grid row's height */
 .복숭이 {
-  display: grid;
-  grid-template-columns: 1fr 0.7fr 1.3fr;
-  grid-template-rows: auto auto;
-  gap: 0px 0px;
-  grid-template-areas:
-    "포도 포도 ㅠㅠ"
-    "씨발 씨발 씨발";
 grid-area: 복숭이;
 border:1px solid black;
 border-top:none;
-border-bottom:none;
 background-color:white;
 padding:5px;
 }
 
-/* this is the site info on the left! */
-.포도 {
-grid-area: 포도;
-padding:5px;
-line-height:110%;
-}
-
 /* this is for the calendar! on the right! -- explicit height since the iframe's */
-/* height="100%" attribute needs a definite parent height to resolve against */
+/* height="100%" attribute needs a definite parent height to resolve against. */
+/* comes first in the markup so the bio text below wraps around it from the start */
 .ㅠㅠ {
-grid-area: ㅠㅠ;
-padding:0px;
 float:right;
+width:190px;
+padding:0px;
+margin:0px 0px 5px 8px;
 }
 
 /* it's a cross-origin iframe (rice.place's own calendar page) so its internal CSS */
@@ -176,13 +165,22 @@ float:right;
 /* restrictions since it just filters the rendered pixels, not the content itself */
 #frame {
 height:200px;
+width:100%;
 filter: grayscale(1);
 }
 
-/* more area under the site info and calendar divs! */
-.씨발 { 
-grid-area: 씨발; 
-padding:5px;
+/* this is the site info on the left! */
+.포도 {
+padding:5px 5px 0px 5px;
+line-height:110%;
+}
+
+/* more area under the site info and calendar divs! -- clear:right guarantees this */
+/* starts full-width (not squeezed beside the calendar) regardless of whether the */
+/* calendar or the bio text above is taller */
+.씨발 {
+clear:right;
+padding:0px 5px 5px 5px;
 line-height:110%;
 }
 
@@ -379,21 +377,21 @@ scrollbar-color: #999999 #e8e8e8;
     
     <!-- grandkids -->
     <div class="복숭이">
-        <!-- left div -->
-    	<div class="포도">
-      <img src="https://i.ibb.co/VWKZgRhp/ezgif-7ef0700dc385e6cd.gif" style="float:left;padding-right:5px;"> Hi, im bork(Aaron) and welcome to my <i>dungeon.</i> My hobbies include competitve programming, competitve swimming, and chess! I Love to read/watch about anything, so free feel to give me some recs :)<br><br>
-      Looking for where to go next? check out some pics i've taken! <br>|╯°□°)╯︵┻━┻
-      </div>
-      <!-- right div -->
+        <!-- right div, comes first in the markup so the bio text wraps around it -->
        <div class="ㅠㅠ">
       <iframe id="frame" src="https://rice.place/other/calendar01.html" width="100%" height="100%" frameborder="0"></iframe>
         </div>
+        <!-- left div -->
+    	<div class="포도">
+      <p style="margin:0 0 9.25px 0;"><img src="https://i.ibb.co/VWKZgRhp/ezgif-7ef0700dc385e6cd.gif" style="float:left;padding-right:5px;"> Hi, im bork(Aaron) and welcome to my <i>dungeon.</i> My hobbies include competitve programming, competitve swimming, and chess! I Love to read/watch about anything, so free feel to give me some recs :)</p>
+      <p style="margin:0;">Looking for where to go next? check out some pics i've taken! <br>|╯°□°)╯︵┻━┻</p>
+      </div>
         <!-- bottom div -->
         <div class="씨발">
         <!-- the image of a kitten and has text above the kitten -->
-        <center><img src="https://i.ibb.co/G4fvdB62/Untitled-design-5.png" style="border:1px solid black;"></center>
-        My favorite game currently is Cybperpunk 2077 (&lt;3 realistic graphics) and I play minecraft/rhythm games time to time. <!-- an image that is floating right as of right now --><img src="https://i.ibb.co/YVpZN4v/ezgif-1e4eda085b59fafa.gif" style="float:right;"> Favorite swimming events include 200 free, 50 free, and 100 back. <br><br>
-        Outside of my other activites i'm a huge NBA fan (go mavs), and currently a candidates master in codeforces! ("In the midst of chaos, there is also opportunity." - Sun Tzu, The Art of War)
+        <img src="https://i.ibb.co/G4fvdB62/Untitled-design-5.png" style="border:1px solid black;display:block;margin:2.5px auto;">
+        <p style="margin:0 0 9.25px 0;">My favorite game currently is Cybperpunk 2077 (&lt;3 realistic graphics) and I play minecraft/rhythm games time to time. <!-- an image that is floating right as of right now --><img src="https://i.ibb.co/YVpZN4v/ezgif-1e4eda085b59fafa.gif" style="float:right;"> Favorite swimming events include 200 free, 50 free, and 100 back.</p>
+        <p style="margin:0;">Outside of my other activites i'm a huge NBA fan (go mavs), and currently a candidates master in codeforces! ("In the midst of chaos, there is also opportunity." - Sun Tzu, The Art of War)</p>
         </div>
     </div>
     
